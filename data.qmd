@@ -1,5 +1,18 @@
 # Data
 
-## Description
+## Technical Description
 
-## Missing value analysis
+For this project, we will be using data from the CDC pertaining to youth health risk factors. The specific risk factors that we will be exploring are nutrition, physical activity, and obesity. The data is being collected by the Youth Risk Behavior Surveillance System, a set of surveys that tracks behaviors that can lead to poor health for students in high school (9th-12th grade). The data is owned by the Division of Nutrition, Physical Activity, and Obesity (DNPAO). Our data was created on July 22, 2016, last updated on January 29, 2021, and the meta-data was last updated on August 25, 2023. 
+
+There are 31 columns and 40,100 rows in this data set as of the last update. The data contains a mix of strings and floats. Some of the columns that we plan to use in our analysis include "YearStart", "YearEnd", "LocationAbbr", "Topic", "Question", "Data_Value", "Sample_Size", "Total", "Gender", "Grade", and "Race/Ethnicity". In particular, the "LocationAbbr", Gender", "Grade", and "Race/Ethnicity" columns will inform us of specific demographics of each observation. We will use these to analyze how different demographics are impacted by the youth health risk factors.  
+
+After taking a glance at the data, we immediately noticed that there are several "NA" values which will need to be dealt with before analyzing youth risks by the demographics listed above. There are also several columns that will not be needed for our analysis, so we will subset the data so that further data manipulation will be more efficient. We will save the data as a ".csv" file and then import the data using the "read_csv()" function in R.
+
+Sources:
+
+1. https://data.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Youth-Risk/vba9-s8jp 
+2. https://www.cdc.gov/healthyyouth/data/yrbs/index.htm 
+
+## Research Plan
+
+## Missing Value Analysis
