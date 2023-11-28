@@ -1,0 +1,18 @@
+# Introduction
+According to the World Health Organization, the global obesity rate has tripled from 1975 to 2016. In 2016 alone, nearly 2 billion adults (ages 18+), 340 million adolescents (ages 5-19), and 40 million (ages <5) were classified as obese, with these numbers projected to continue steadily increasing. Left ignored, obesity can have several detrimental health consequences including cardiovascular complications, cancers, and Type 2 diabetes. 
+
+For many, obesity onset occurs at a young age. According to the CDC, nearly 15 million children were impacted by obesity between 2017-2020, amounting to nearly 20% of the U.S. adolescent population. Breaking this metric down into age groups, ~13% of 2-5 year olds, ~21% of 6-11 year olds, and ~22% of 12-19 year olds were classified as obese. This indicates that the obesity rate has been increasing with respect to adolescent age as well. The CDC also stated that obesity levels differed by other factors, including racial group and gender. Thus, the goal of this project was to explore and analyze the different factors contributing to high childhood obesity levels. Listed below are a few questions that this exploratory analysis aims to answer: 
+
+1. Are certain races more prone to obesity development than others?
+2. What lifestyle choices are correlated with obesity onset?
+3. Does geographic location of residence impact obesity onset?
+4. How have the aforementioned factors impacted obesity rates over the course of a decade?
+
+With a better understanding the factors that lead to obesity onset and development, we can also realize potential preventative measures that could reduce or delay onset. In the following section, we chose a dataset that captures the aforementioned information and indicate a plan to explore and analyze this data. 
+
+
+Sources:
+
+1. https://www.who.int/news-room/fact-sheets/detail/obesity-and-overweight 
+2. https://www.who.int/news-room/questions-and-answers/item/obesity-health-consequences-of-being-overweight 
+3. https://www.cdc.gov/obesity/data/childhood.html
