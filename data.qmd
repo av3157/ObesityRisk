@@ -16,3 +16,35 @@ Sources:
 ## Research Plan
 
 ## Missing Value Analysis
+First, to analyze the dataset as a whole, we replaced all empty strings with NA to allow for easier calculation. Then, we ran the plot_missing function on the entire dataset. As seen in the figure below, the "Data_Value_Unit" column has 100% NA values, and thus can be removed entirely. There are a few others columns with a high NA rate, such as "Gender", "Total", "Data_Value_Footnote", etc. The reason that most of the major demographics (i.e. "Gender", "Race/Ethnicity", "Grade") have many NA values is because those specific columns will only contain a value if the observation was stratified by that demographic. For instance, if the data in a row was with regards to the "Gender" percentage of adolescents, the "Gender" column would have a value and the "Race/Ethnicity" and "Grade" columns would be empty. For this reason, the "Stratification1" and "StratificationCategory1" columns have no NA values, since they store this data. Thus, when beginning data analysis, we will remove the "Gender", "Race/Ethnicity", "Grade", "Total", and other similar columns and only keep the stratified columns. 
+
+```{r fig.height=8}
+library(ggplot2)
+library(forcats)
+library(DataExplorer)
+
+data <- read.csv("obesity_dataset.csv")
+data[data==""]<- NA
+plot_missing(data, title = "Analysis of NA Values")
+
+
+```
+With regards to the whole dataset, one of the primary variables of interest is the "Data_Value" variable which indiactes the percentage of students with respect to a category ("Race/Ethnicity", "Grade", "Gender", "Total") that correspond to the question. For instance, the first row of the dataset has a "LocationDesc" of "Alaska", "YearStart" and "YearEnd" as "2019", "Question" of "Percent of students in grades 9-12 who achieve 1 hour or more of moderate-and/or vigorous-intensity physical activity daily" with a "Data_Value" of "9.6" stratified on "Race/Ethnicity" with a value of "Asian". To break this down, this means that in 2019, 9.6% of Asians in Alaska achieved 1+ hour of moderate-and/or vigorous physical activity daily. 
+
+However, some values in the "Data_Value" column are marked as NA. So, even though there is a corresponding state, date, stratification, etc., the value is not given. Thus, we wanted to compare how many NA data values there were in the dataset, and how many values corresponding to other stratificaiton categories there were. The results are shown in the bar graph below. 
+
+```{r}
+data$missing_values <- data$StratificationCategory1
+data$missing_values[is.na(data$Data_Value)] = 'NA'
+
+data_subset_1 <- data[data$Data_Value_Footnote != "", ]
+
+ggplot(data, aes(x=fct_infreq(missing_values))) +
+  geom_bar(fill="gray") +
+  labs(title = "Frequency of Stratification Categories", x = "Categories", y = "Frequency") +
+  theme(plot.title = element_text(hjust = 0.5, color = "black", size = 14, face = "bold"))
+
+```
+From the bar chart above, we can see that there are a little above 10000 data points that do not have a given data value, and will be removed prior to analysis. This is corroborated by our first plot which shows 26.53% NA values for the "Data_Value" column. 
+
+
