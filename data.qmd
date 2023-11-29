@@ -34,4 +34,5 @@ In this question we will tackle the question of whether geographic locations of 
 In this question we will tackle the question of how obesity rates change over a decade for all health factors. We will use the "YearEnd", Class", and "Data_Value" columns for this analysis. The "YearEnd" column tells us which year the data for a specific class, location, and stratification was last collected. Most of the data collection lasts one year for each observation but there are cases where the data collection lasts more than one year (i.e. "YearEnd" - "YearStart" > 0) and this is one potential issue we will have to deal with. The "Class" column informs us which health risk category the question pertains to; for this question, we will use all classes. The "Data_Value" column provides us information on the percentage of students that face the specified health risk.  We will create either an overlapping line graph or an overlapping ridge line plot using the "ggplot2" library and plot the years on the x-axis and the obesity rates on the y-axis. Each line graph/ridge line plot will be a different health factor. This will allow us to see which health factor(s) incurs the most change in obesity rates over time.
 
 
-## Missing Value Analysis
+## Missing Value Analysis 
+
