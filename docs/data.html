@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.433">
+<meta name="generator" content="quarto-1.3.353">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>YOUR PROJECT TITLE - 2&nbsp; Data</title>
+<title>Obesity Risk - 2&nbsp; Data</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -19,6 +19,40 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -57,8 +91,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
     "search-detached-cancel-button-title": "Cancel",
-    "search-submit-button-title": "Submit",
-    "search-label": "Search"
+    "search-submit-button-title": "Submit"
   }
 }</script>
 
@@ -77,7 +110,7 @@ ul.task-list li input[type="checkbox"] {
       <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./data.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Data</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+      <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -89,9 +122,9 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">YOUR PROJECT TITLE</a> 
+      <a href="./">Obesity Risk</a> 
         <div class="sidebar-tools-main">
-    <a href="https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME" rel="" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
+    <a href="https://github.com/av3157/ObesityRisk.git" title="Source Code" class="quarto-navigation-tool px-1" aria-label="Source Code"><i class="bi bi-github"></i></a>
 </div>
     </div>
       </div>
@@ -142,10 +175,17 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#description" id="toc-description" class="nav-link active" data-scroll-target="#description"><span class="header-section-number">2.1</span> Description</a></li>
-  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</a></li>
+  <li><a href="#technical-description" id="toc-technical-description" class="nav-link active" data-scroll-target="#technical-description"><span class="header-section-number">2.1</span> Technical Description</a></li>
+  <li><a href="#research-plan" id="toc-research-plan" class="nav-link" data-scroll-target="#research-plan"><span class="header-section-number">2.2</span> Research Plan</a>
+  <ul class="collapse">
+  <li><a href="#question-1-race-vs-obesity" id="toc-question-1-race-vs-obesity" class="nav-link" data-scroll-target="#question-1-race-vs-obesity"><span class="header-section-number">2.2.1</span> Question 1: Race vs Obesity</a></li>
+  <li><a href="#question-2-lifestyle-choices-vs-obesity" id="toc-question-2-lifestyle-choices-vs-obesity" class="nav-link" data-scroll-target="#question-2-lifestyle-choices-vs-obesity"><span class="header-section-number">2.2.2</span> Question 2: Lifestyle Choices vs Obesity</a></li>
+  <li><a href="#question-3-location-vs-obesity" id="toc-question-3-location-vs-obesity" class="nav-link" data-scroll-target="#question-3-location-vs-obesity"><span class="header-section-number">2.2.3</span> Question 3: Location vs Obesity</a></li>
+  <li><a href="#question-4-health-factors-over-decade-vs-obesity" id="toc-question-4-health-factors-over-decade-vs-obesity" class="nav-link" data-scroll-target="#question-4-health-factors-over-decade-vs-obesity"><span class="header-section-number">2.2.4</span> Question 4: Health Factors over Decade vs Obesity</a></li>
+  </ul></li>
+  <li><a href="#missing-value-analysis" id="toc-missing-value-analysis" class="nav-link" data-scroll-target="#missing-value-analysis"><span class="header-section-number">2.3</span> Missing Value Analysis</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/YOUR_GITHUB_ACCOUNT/REPO_NAME/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/av3157/ObesityRisk.git/edit/main/data.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/av3157/ObesityRisk.git/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
@@ -167,11 +207,75 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<section id="description" class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="description"><span class="header-section-number">2.1</span> Description</h2>
+<section id="technical-description" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="technical-description"><span class="header-section-number">2.1</span> Technical Description</h2>
+<p>For this project, we will be using data from the CDC pertaining to youth health risk factors. The specific risk factors that we will be exploring are nutrition, physical activity, and obesity. The data is being collected by the Youth Risk Behavior Surveillance System, a set of surveys that tracks behaviors that can lead to poor health for students in high school (9th-12th grade). The data is owned by the Division of Nutrition, Physical Activity, and Obesity (DNPAO). Our data was created on July 22, 2016, last updated on January 29, 2021, and the meta-data was last updated on August 25, 2023.</p>
+<p>There are 31 columns and 40,100 rows in this data set as of the last update. The data contains a mix of strings and floats. Some of the columns that we plan to use in our analysis include “YearStart”, “YearEnd”, “LocationAbbr”, “Topic”, “Question”, “Data_Value”, “Sample_Size”, “Total”, “Gender”, “Grade”, and “Race/Ethnicity”. In particular, the “LocationAbbr”, Gender”, “Grade”, and “Race/Ethnicity” columns will inform us of specific demographics of each observation. We will use these to analyze how different demographics are impacted by the youth health risk factors.</p>
+<p>After taking a glance at the data, we immediately noticed that there are several “NA” values which will need to be dealt with before analyzing youth risks by the demographics listed above. There are also several columns that will not be needed for our analysis, so we will subset the data so that further data manipulation will be more efficient. We will save the data as a “.csv” file and then import the data using the “read_csv()” function in R.</p>
+<p>Sources:</p>
+<ol type="1">
+<li>https://data.cdc.gov/Nutrition-Physical-Activity-and-Obesity/Nutrition-Physical-Activity-and-Obesity-Youth-Risk/vba9-s8jp</li>
+<li>https://www.cdc.gov/healthyyouth/data/yrbs/index.htm</li>
+</ol>
 </section>
-<section id="missing-value-analysis" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.2</span> Missing value analysis</h2>
+<section id="research-plan" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="research-plan"><span class="header-section-number">2.2</span> Research Plan</h2>
+<p>Since we will be answering the four questions mentioned in the Introduction, we will break this section into four parts. Our data set contains several columns which will allow us to answer these questions.</p>
+<section id="question-1-race-vs-obesity" class="level3" data-number="2.2.1">
+<h3 data-number="2.2.1" class="anchored" data-anchor-id="question-1-race-vs-obesity"><span class="header-section-number">2.2.1</span> Question 1: Race vs Obesity</h3>
+<p>In this section, we will tackle the question of whether certain races are more prone to obesity than others. We will use the “Class”, “Data_Value”, and “StratificationCategory1” columns for this analysis. The “Class” column informs us which health risk category the question pertains to; for this question, we will specifically filter for the “Obesity / Weight Status” class. The “Data_Value” column provides us information on the percentage of students that face the specified health risk. The “StratificationCategory1” column contains information on which demographic the data has been stratified on; for this question, we will group by “Race/Ethnicity” so that we can understand the obesity percentages by race. We will create a bar plot using the “ggplot2” library and plot the races on the x-axis and the obesity percentages on the y-axis. This will allow us to see which race(s) is the most prone to obesity.</p>
+</section>
+<section id="question-2-lifestyle-choices-vs-obesity" class="level3" data-number="2.2.2">
+<h3 data-number="2.2.2" class="anchored" data-anchor-id="question-2-lifestyle-choices-vs-obesity"><span class="header-section-number">2.2.2</span> Question 2: Lifestyle Choices vs Obesity</h3>
+<p>In this section we will tackle the question of how lifestyle choices impact obesity rates. We will use the “Class”, Data_Value”, and “StratificationCategory1” columns for this analysis. The “Class” column informs us which health risk category the question pertains to; for this question, we will specifically filter out the “Obesity / Weight Status” class. In other words, we will keep all the rows containing the values “Physical Activity”, “Sugar Drinks”, Fruits and Vegetables”, and “Television Viewing” since these are specific lifestyle choices. The “Data_Value” column provides us information on the percentage of students that face the specified health risk. The “StratificationCategory1” column contains information on which demographic the data has been stratified on; for this question, we will group by “Race/Ethnicity” so that we can understand the obesity rates by race. We will create a mosaic plot using the “ggplot2” library and plot the lifestyle choices and races on the horizontal-axis and the obesity percentages on the vertical-axis. This will allow us to see the impact of lifestyle choices by race on obesity rates. We will repeat this process for “Gender” and “Grade” stratifications and describe any differences in overall obesity rates.</p>
+</section>
+<section id="question-3-location-vs-obesity" class="level3" data-number="2.2.3">
+<h3 data-number="2.2.3" class="anchored" data-anchor-id="question-3-location-vs-obesity"><span class="header-section-number">2.2.3</span> Question 3: Location vs Obesity</h3>
+<p>In this question we will tackle the question of whether geographic locations of residence impact the onset of obesity. We will use the “Class”, “Data_Value”, and “LocationAbbr” columns for this analysis. The “Class” column informs us which health risk category the question pertains to; for this question, we will specifically filter for the “Obesity / Weight Status” class. The “Data_Value” column provides us information on the percentage of students that face the specified health risk. The “LocationAbbr” column contains state name abbreviations where the data samples were taken from; we will group by this column so that we can observe which states have the highest obesity percentages. We will create a bar plot using the “ggplot2” library and plot the state name abbreviations on the x-axis and the obesity percentages on the y-axis. This will allow us to see which state(s) has the highest obesity rate.</p>
+</section>
+<section id="question-4-health-factors-over-decade-vs-obesity" class="level3" data-number="2.2.4">
+<h3 data-number="2.2.4" class="anchored" data-anchor-id="question-4-health-factors-over-decade-vs-obesity"><span class="header-section-number">2.2.4</span> Question 4: Health Factors over Decade vs Obesity</h3>
+<p>In this question we will tackle the question of how obesity rates change over a decade for all health factors. We will use the “YearEnd”, Class”, and “Data_Value” columns for this analysis. The “YearEnd” column tells us which year the data for a specific class, location, and stratification was last collected. Most of the data collection lasts one year for each observation but there are cases where the data collection lasts more than one year (i.e.&nbsp;“YearEnd” - “YearStart” &gt; 0) and this is one potential issue we will have to deal with. The “Class” column informs us which health risk category the question pertains to; for this question, we will use all classes. The “Data_Value” column provides us information on the percentage of students that face the specified health risk. We will create either an overlapping line graph or an overlapping ridge line plot using the “ggplot2” library and plot the years on the x-axis and the obesity rates on the y-axis. Each line graph/ridge line plot will be a different health factor. This will allow us to see which health factor(s) incurs the most change in obesity rates over time.</p>
+</section>
+</section>
+<section id="missing-value-analysis" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="missing-value-analysis"><span class="header-section-number">2.3</span> Missing Value Analysis</h2>
+<p>First, to analyze the dataset as a whole, we replaced all empty strings with NA to allow for easier calculation. Then, we ran the plot_missing function on the entire dataset. As seen in the figure below, the “Data_Value_Unit” column has 100% NA values, and thus can be removed entirely. There are a few others columns with a high NA rate, such as “Gender”, “Total”, “Data_Value_Footnote”, etc. The reason that most of the major demographics (i.e.&nbsp;“Gender”, “Race/Ethnicity”, “Grade”) have many NA values is because those specific columns will only contain a value if the observation was stratified by that demographic. For instance, if the data in a row was with regards to the “Gender” percentage of adolescents, the “Gender” column would have a value and the “Race/Ethnicity” and “Grade” columns would be empty. For this reason, the “Stratification1” and “StratificationCategory1” columns have no NA values, since they store this data. Thus, when beginning data analysis, we will remove the “Gender”, “Race/Ethnicity”, “Grade”, “Total”, and other similar columns and only keep the stratified columns.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(forcats)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(DataExplorer)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>data <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"obesity_dataset.csv"</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>data[data<span class="sc">==</span><span class="st">""</span>]<span class="ot">&lt;-</span> <span class="cn">NA</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">plot_missing</span>(data, <span class="at">title =</span> <span class="st">"Analysis of NA Values"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-1-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>With regards to the whole dataset, one of the primary variables of interest is the “Data_Value” variable which indiactes the percentage of students with respect to a category (“Race/Ethnicity”, “Grade”, “Gender”, “Total”) that correspond to the question. For instance, the first row of the dataset has a “LocationDesc” of “Alaska”, “YearStart” and “YearEnd” as “2019”, “Question” of “Percent of students in grades 9-12 who achieve 1 hour or more of moderate-and/or vigorous-intensity physical activity daily” with a “Data_Value” of “9.6” stratified on “Race/Ethnicity” with a value of “Asian”. To break this down, this means that in 2019, 9.6% of Asians in Alaska achieved 1+ hour of moderate-and/or vigorous physical activity daily.</p>
+<p>However, some values in the “Data_Value” column are marked as NA. So, even though there is a corresponding state, date, stratification, etc., the value is not given. Thus, we wanted to compare how many NA data values there were in the dataset, and how many values corresponding to other stratificaiton categories there were. The results are shown in the bar graph below.</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>missing_values <span class="ot">&lt;-</span> data<span class="sc">$</span>StratificationCategory1</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data<span class="sc">$</span>missing_values[<span class="fu">is.na</span>(data<span class="sc">$</span>Data_Value)] <span class="ot">=</span> <span class="st">'NA'</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>data_subset_1 <span class="ot">&lt;-</span> data[data<span class="sc">$</span>Data_Value_Footnote <span class="sc">!=</span> <span class="st">""</span>, ]</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(data, <span class="fu">aes</span>(<span class="at">x=</span><span class="fu">fct_infreq</span>(missing_values))) <span class="sc">+</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">fill=</span><span class="st">"gray"</span>) <span class="sc">+</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">title =</span> <span class="st">"Frequency of Stratification Categories"</span>, <span class="at">x =</span> <span class="st">"Categories"</span>, <span class="at">y =</span> <span class="st">"Frequency"</span>) <span class="sc">+</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">hjust =</span> <span class="fl">0.5</span>, <span class="at">color =</span> <span class="st">"black"</span>, <span class="at">size =</span> <span class="dv">14</span>, <span class="at">face =</span> <span class="st">"bold"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output-display">
+<p><img src="data_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p>From the bar chart above, we can see that there are a little above 10000 data points that do not have a given data value, and will be removed prior to analysis. This is corroborated by our first plot which shows 26.53% NA values for the “Data_Value” column.</p>
 
 
 </section>
