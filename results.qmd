@@ -1,1 +1,255 @@
 # Results
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
+```
+
+
+```{r, import_dataset, include=FALSE}
+library(ggplot2)
+library(forcats)
+library(DataExplorer)
+library(tidyr)
+
+data <- read.csv("obesity_dataset.csv")
+data[data==""]<- NA
+
+data$missing_values <- data$StratificationCategory1
+data$missing_values[is.na(data$Data_Value)] = 'NA'
+
+data_subset_1 <- data[data$Data_Value_Footnote != "", ]
+```
+
+
+```{r, subset_data, include=FALSE}
+library(dplyr)
+
+data_final <- data |> select(YearStart, YearEnd, LocationAbbr, LocationDesc, Class, Question, Data_Value, Sample_Size, Stratification1, StratificationCategory1)
+
+data_final <- na.omit(data_final)
+```
+
+
+## Exploratory Plots
+
+```{r, mosaic}
+library(vcd)
+
+stratum <- data_final |> 
+  select(Class, StratificationCategory1) |>
+  filter(StratificationCategory1 != "Total") |>
+  mutate(Class = recode(Class, `Fruits and Vegetables` = 'Fruits/Veggies', `Physical Activity` = 'Phys. Activity', `Sugar Drinks` =  'Sugar Drinks', `Television Viewing` = "Watching TV"))
+
+mosaicplot(table(stratum), main="Stratum vs Class", xlab="Class", ylab="Stratum")
+
+```
+
+
+```{r, ridgeline}
+class_year <- data_final |> 
+  select(YearEnd, Class, `Data_Value`,StratificationCategory1, Stratification1) |>
+  filter(StratificationCategory1 != "Total")
+
+library(ggridges)
+
+ggplot(class_year, aes(x=`Data_Value`, y=StratificationCategory1, fill=Class)) +
+  geom_density_ridges(scale=0.8) +
+  theme_ridges() +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=16, face="bold"),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14)) +
+  labs(title="Stratums vs Obesity Rates by Class", x="Obesity Percentage", y="Stratum")
+```
+
+
+## Question 1
+
+```{r, obesity_race, include=FALSE}
+obesity_class_race <- data_final |> 
+  select(Class, `Data_Value`, StratificationCategory1, Stratification1) |> 
+  filter(Class == "Obesity / Weight Status") |> 
+  filter(StratificationCategory1 == "Race/Ethnicity") |>
+  group_by(Stratification1) |>
+  summarise("AVG Obesity %" = mean(Data_Value))
+
+p1 <- ggplot(obesity_class_race, aes(x=fct_reorder(Stratification1,-`AVG Obesity %`), y=`AVG Obesity %`)) +
+  geom_bar(stat="identity", color="black", fill="darkblue") +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  labs(title="Average Obesity Percentage by Race",  x="Race", y="Average Obesity %")
+```
+
+
+```{r, obesity_gender, include=FALSE}
+obesity_class_gender <- data_final |> 
+  select(Class, `Data_Value`, StratificationCategory1, Stratification1) |> 
+  filter(Class == "Obesity / Weight Status") |> 
+  filter(StratificationCategory1 == "Gender") |>
+  group_by(Stratification1) |>
+  summarise("AVG Obesity %" = mean(Data_Value))
+
+p2 <- ggplot(obesity_class_gender, aes(x=fct_reorder(Stratification1,-`AVG Obesity %`), y=`AVG Obesity %`)) +
+  geom_bar(stat="identity", color="black", fill="darkred") +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  labs(title="Average Obesity Percentage by Gender",  x="Gender", y="Average Obesity %")
+```
+
+
+```{r, obesity_grade, include=FALSE}
+obesity_class_grade <- data_final |> 
+  select(Class, `Data_Value`, StratificationCategory1, Stratification1) |> 
+  filter(Class == "Obesity / Weight Status") |> 
+  filter(StratificationCategory1 == "Grade") |>
+  group_by(Stratification1) |>
+  summarise("AVG Obesity %" = mean(Data_Value))
+
+p3 <- ggplot(obesity_class_grade, aes(x=fct_reorder(Stratification1,-`AVG Obesity %`), y=`AVG Obesity %`)) +
+  geom_bar(stat="identity", color="black", fill="darkgreen") +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  scale_x_discrete(guide = guide_axis(angle = 45)) +
+  labs(title="Average Obesity Percentage by Grade",  x="Grade", y="Average Obesity %")
+```
+
+
+```{r, grid_plots, fig.height=10, fig.width=10}
+library(gridExtra)
+
+combine23 <- arrangeGrob(p2,p3,ncol=2)
+grid.arrange(p1,combine23,ncol=1)
+
+```
+
+
+## Question 2
+
+```{r, lifestyle_race, fig.height=10, fig.width=10}
+lifestyle_race <- data_final |>
+  select(Class, `Data_Value`, StratificationCategory1, Stratification1) |> 
+  filter(Class != "Obesity / Weight Status") |> 
+  filter(StratificationCategory1 == "Race/Ethnicity") |>
+  group_by(Class,Stratification1) |>
+  summarise("AVG Obesity %" = mean(Data_Value)) |>
+  mutate(Class = recode(Class, `Fruits and Vegetables` = 'Fruits/Veggies', `Physical Activity` = 'Phys. Activity', `Sugar Drinks` =  'Sugar Drinks', `Television Viewing` = "Watching TV"))
+
+ggplot(lifestyle_race, aes(x=Class, y=`AVG Obesity %`)) +
+  geom_bar(stat="identity", color="black", fill="turquoise") +
+  facet_wrap(~Stratification1) +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=20, face="bold"),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14)) +
+  labs(title="Average Obesity Percentage vs Lifestyle Choices by Race", x="Lifestyle Choice", y="Average Obesity %") +
+  scale_x_discrete(guide = guide_axis(angle = 45))
+  
+```
+
+
+```{r, lifestyle_gender}
+lifestyle_gender <- data_final |>
+  select(Class, `Data_Value`, StratificationCategory1, Stratification1) |> 
+  filter(Class != "Obesity / Weight Status") |> 
+  filter(StratificationCategory1 == "Gender") |>
+  group_by(Class,Stratification1) |>
+  summarise("AVG Obesity %" = mean(Data_Value)) |>
+  mutate(Class = recode(Class, `Fruits and Vegetables` = 'Fruits/Veggies', `Physical Activity` = 'Phys. Activity', `Sugar Drinks` =  'Sugar Drinks', `Television Viewing` = "Watching TV"))
+
+ggplot(lifestyle_gender, aes(x=Class, y=`AVG Obesity %`)) +
+  geom_bar(stat="identity", color="black", fill="violet") +
+  facet_wrap(~Stratification1) +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  labs(title="Average Obesity Percentage vs Lifestyle Choices by Gender", x="Lifestyle Choice", y="Average Obesity %") +
+  scale_x_discrete(guide = guide_axis(angle = 45))
+  
+```
+
+
+```{r, lifestyle_grade}
+lifestyle_grade <- data_final |>
+  select(Class, `Data_Value`, StratificationCategory1, Stratification1) |> 
+  filter(Class != "Obesity / Weight Status") |> 
+  filter(StratificationCategory1 == "Grade") |>
+  group_by(Class,Stratification1) |>
+  summarise("AVG Obesity %" = mean(Data_Value)) |>
+  mutate(Class = recode(Class, `Fruits and Vegetables` = 'Fruits/Veggies', `Physical Activity` = 'Phys. Activity', `Sugar Drinks` =  'Sugar Drinks', `Television Viewing` = "Watching TV"))
+
+facet_order <- c("9th", "10th", "11th", "12th")
+
+lifestyle_grade$Stratification1 <- factor(lifestyle_grade$Stratification1, levels=facet_order)
+
+ggplot(lifestyle_grade, aes(x=Class, y=`AVG Obesity %`)) +
+  geom_bar(stat="identity", color="black", fill="brown") +
+  facet_wrap(~Stratification1) +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  labs(title="Average Obesity Percentage vs Lifestyle Choices by Grade", x="Lifestyle Choice", y="Average Obesity %") +
+  scale_x_discrete(guide = guide_axis(angle = 45))
+  
+```
+
+
+## Question 4
+
+```{r, years, include=FALSE}
+dates <- data_final$YearEnd - data_final$YearStart
+sum(dates)
+```
+
+```{r, line_plot, fig.height=6, fig.width=6}
+years <- class_year |> 
+  group_by(YearEnd) |> 
+  summarise("AVG Obesity %" = mean(`Data_Value`))
+ggplot(years, aes(x=YearEnd, y=`AVG Obesity %`)) +
+  geom_line(stat="identity") +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  labs(title="Change of Obesity Rates over time", x="Year", y="Average Obesity %")
+
+```
+
+
+```{r, multiple_lines, fig.height=6, fig.width=8, include=FALSE}
+stratums <- class_year |> 
+  group_by(StratificationCategory1, YearEnd) |> 
+  summarise("AVG Obesity %" = mean(`Data_Value`)) 
+ggplot(stratums, aes(x=YearEnd, y=`AVG Obesity %`, color=StratificationCategory1)) +
+  geom_line(stat="identity") +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=14, face="bold"),
+        axis.title.x = element_text(size=12),
+        axis.title.y = element_text(size=12)) +
+  labs(title="Change of Obesity Rates over time by Stratum", x="Year", y="Average Obesity %", color="Stratification Category")
+
+
+```
+
+
+```{r, multiple_lines_classes, fig.height=6, fig.width=9}
+strat_order <- c("Male", "Female", "9th", "10th", "11th", "12th", "Non-Hispanic Black", "American Indian/Alaska Native", "Hawaiian/Pacific Islander", "Hispanic", "2 or more races", "Non-Hispanic White", "Asian","Total")
+substrats <- class_year |> 
+  group_by(StratificationCategory1, Stratification1, YearEnd) |> 
+  summarise("AVG Obesity %" = mean(`Data_Value`)) 
+
+total_trend <- aggregate(`AVG Obesity %` ~ YearEnd + StratificationCategory1, data = substrats, FUN = mean)
+
+ggplot(substrats, aes(x=YearEnd, y=`AVG Obesity %`, color=Stratification1)) +
+  geom_line(stat="identity") +
+  facet_grid(~StratificationCategory1) + 
+  scale_color_manual(breaks=strat_order, values=c("violet","magenta","red","orange","yellow","green","cyan","cornflowerblue","blue","darkblue","purple","brown","grey","black")) + 
+  theme(plot.title = element_text(hjust=0.5, color="black", size=16, face="bold"),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14)) +
+  geom_line(data = total_trend, aes(x=YearEnd, y=`AVG Obesity %`, color="Total"), linetype = "dashed") +
+  labs(title="Change of Obesity Rates over time by Stratums", x="Year", y="Average Obesity %", color="Sub-Stratifications") 
+
+```
+
