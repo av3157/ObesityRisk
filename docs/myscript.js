@@ -61,10 +61,11 @@ const line = d3.line()
   .y(d => yScale(d.y));
 
 // Create scales
-const min_data = 2005, max_data = 2020
+const min_data = 2005
+const max_data = 2020
+
 const xScale = d3.scaleLinear().domain([min_data, max_data]).range([0, width]);
 const yScale = d3.scaleLinear().domain([0, 40]).range([height, 0]);
-
 
 var obesitypath;
 var physicalpath;

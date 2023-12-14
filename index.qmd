@@ -5,8 +5,8 @@ For many, obesity onset occurs at a young age and progressively becomes more dif
 
 1. Are certain races more prone to obesity development than others?
 2. What lifestyle choices are correlated with obesity onset?
-3. Does geographic location of residence impact obesity onset?
-4. How have the aforementioned factors impacted obesity rates over the course of a decade?
+3. How have the aforementioned factors impacted obesity rates over the course of a decade?
+4. Does geographic location of residence impact obesity onset?
 
 With a better understanding the factors that lead to obesity onset and development, we can also realize potential preventative measures that could reduce or delay onset. In the following section, we chose a dataset that captures the aforementioned information and elaborate on a plan to explore and analyze this data. 
 

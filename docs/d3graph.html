@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Obesity Risk - 4&nbsp; Interactive graph</title>
+<title>Obesity Risk - 4&nbsp; Interactive Graph</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +73,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./d3graph.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive graph</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./d3graph.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive Graph</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="Search" onclick="window.quartoOpenSearch();">
@@ -122,7 +122,7 @@ ul.task-list li input[type="checkbox"] {
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
   <a href="./d3graph.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive graph</span></span></a>
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive Graph</span></span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -144,7 +144,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive graph</span></h1>
+<h1 class="title"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Interactive Graph</span></h1>
 </div>
 
 
@@ -159,16 +159,26 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<style>
-  * {
-    font-family: sans-serif;
-  }
-</style>
+<p>The interactive graph below is intended to show time-series data for obesity-linked factors from 2007-2019. Clicking on each factor button will add a line indicating its average percentage across all surveyed NY adolescents within the aforementioned time span. Clicking the same button again will remove that line, as to allow for selectivity simultaneously viewed factors.</p>
+<script src="https://d3js.org/d3.v7.min.js"></script>
 <div id="plot">
 
 </div>
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="scripts/myscript.js"></script>
+<button onclick="obesityData()">
+Obesity
+</button>
+<button onclick="physicalData()">
+Physical Activity
+</button>
+<button onclick="sugarData()">
+Sugar Drinks
+</button>
+<button onclick="tvData()">
+TV Watching
+</button>
+<script src="myscript.js"></script>
+<p><br></p>
+<p>As seen from the results above, the obesity rate has only slightly increased from 2007 to 2019, while the rate of daily sugary drinks consumption and TV-watching has decreased. Daily physical activity rates also increased slightly between 2010-2014 but then decreased again to around 20%.</p>
 
 
 
