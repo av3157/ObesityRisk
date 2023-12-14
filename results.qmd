@@ -327,41 +327,15 @@ This stacked line plot, faceted by strata, shows how average obesity rates for e
 
 ## Question 4: Location vs Obesity Rates
 
+The following interactive graphs depict the obesity rate within different US states/geographic regions. To analyze how these rates have changed over time, obesity rate data from 2005, 2011, and 2019 were plotted. Hovering over each individual state will give its corresponding obesity percentage and state abbreviation. It is important to note that not every year had data for each state, so hovering over some states will not yield any data. For instance, Washington state did not have data for any of the three years, and is thus white throughout. 
+
 ```{r}
-knitr::opts_chunk$set(echo = TRUE, warning = FALSE, message = FALSE)
-```
-
-```{r, include = FALSE}
-library(ggplot2)
-library(forcats)
-library(DataExplorer)
-library(tidyr)
-
-data <- read.csv("obesity_dataset.csv")
-data[data==""]<- NA
-
-data$missing_values <- data$StratificationCategory1
-data$missing_values[is.na(data$Data_Value)] = 'NA'
-
-data_subset_1 <- data[data$Data_Value_Footnote != "", ]
-
-library(dplyr)
-
-data_final <- data |> select(YearStart, YearEnd, LocationAbbr, LocationDesc, Class, Question, Data_Value, Sample_Size, Stratification1, StratificationCategory1)
-
-data_final <- na.omit(data_final)
-```
-
-
-
-```{r, include=FALSE}
 library(dplyr)
 library(ggplot2)
 library(dplyr)
 
-data_obesity_population <- data_final |>  filter(Stratification1 == "Total" & Question == "Percent of students in grades 9-12 who have obesity" & YearStart == 2019 & YearEnd == 2019)
-
-data_obesity_population$hover <- with(data_obesity_population, paste(LocationDesc, '<br>', "Percent", Data_Value))
+data_obesity_population_2005 <- filter(data_final, Stratification1 == "Total" & Question == "Percent of students in grades 9-12 who have obesity" & YearStart == 2005 & YearEnd == 2005)
+data_obesity_population_2005$hover <- with(data_obesity_population_2005, paste(LocationDesc, '<br>', "Percent", Data_Value))
 
 library(plotly)
 # white border
@@ -374,12 +348,12 @@ g <- list(
   showlakes = TRUE,
   lakecolor = toRGB('white')
 )
-```
-```{r, plot 1}
-plot_ly(data_obesity_population, z = data_obesity_population$Data_Value, hover = data_obesity_population$hover, locations = data_obesity_population$LocationAbbr, type = 'choropleth',
-        locationmode = 'USA-states', color = data_obesity_population$Data_Value, colors = 'Blues',
+ 
+plot_ly(data_obesity_population_2005, z = data_obesity_population_2005$Data_Value, hover = data_obesity_population_2005$hover, locations = data_obesity_population_2005$LocationAbbr, type = 'choropleth',
+        locationmode = 'USA-states', color = data_obesity_population_2005$Data_Value, colors = 'Oranges',
         marker = list(line = l), colorbar = list(title = "Percentage")) %>%
-  layout(title = '2019 Obesity Percentage Breakdown by State', geo = g)
+  layout(title = '2005 Obesity Percentage Breakdown by State', geo = g)
+
 ```
 
 ```{r, plot 2}
@@ -395,14 +369,15 @@ plot_ly(data_obesity_population_2011, z = data_obesity_population_2011$Data_Valu
 ```
 
 ```{r, plot 3}
-data_obesity_population_2005 <- filter(data_final, Stratification1 == "Total" & Question == "Percent of students in grades 9-12 who have obesity" & YearStart == 2005 & YearEnd == 2005)
-
-data_obesity_population_2005$hover <- with(data_obesity_population_2005, paste(LocationDesc, '<br>', "Percent", Data_Value))
- 
-plot_ly(data_obesity_population_2005, z = data_obesity_population_2005$Data_Value, hover = data_obesity_population_2005$hover, locations = data_obesity_population_2005$LocationAbbr, type = 'choropleth',
-        locationmode = 'USA-states', color = data_obesity_population_2005$Data_Value, colors = 'Oranges',
+data_obesity_population <- data_final |>  filter(Stratification1 == "Total" & Question == "Percent of students in grades 9-12 who have obesity" & YearStart == 2019 & YearEnd == 2019)
+data_obesity_population$hover <- with(data_obesity_population, paste(LocationDesc, '<br>', "Percent", Data_Value))
+```
+```{r, plot 1}
+plot_ly(data_obesity_population, z = data_obesity_population$Data_Value, hover = data_obesity_population$hover, locations = data_obesity_population$LocationAbbr, type = 'choropleth',
+        locationmode = 'USA-states', color = data_obesity_population$Data_Value, colors = 'Blues',
         marker = list(line = l), colorbar = list(title = "Percentage")) %>%
-  layout(title = '2005 Obesity Percentage Breakdown by State', geo = g)
+  layout(title = '2019 Obesity Percentage Breakdown by State', geo = g)
 ```
 
+Looking at the three plots above, we can see that in general, the highest obesity rates are concentrated within the Midwest/Southern regions. For instance, Arkansas had an obesity rate of 15.3%, 15.2%, and 22.1% in 2005, 2011, and 2019, respectively. These percentages also corresponded to some of the higher obesity rates across the country. It is also noticeable that the overall obesity rates have increased. Looking at the default legends alone, the upper bounds have shifted from 14 to 16 to nearly 23, with the lowerbounds increasing from 6 to 8 to 10. This indicates that across the board, obesity rates have been increasing.
 
