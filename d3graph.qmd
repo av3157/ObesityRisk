@@ -1,9 +1,18 @@
 # Interactive Graph 
 
+The interactive graph below is intended to show time-series data for obesity-linked factors from 2007-2019. Clicking on each factor button will add a line indicating its average percentage across all surveyed NY adolescents within the aforementioned time span. Clicking the same button again will remove that line, as to allow for selectivity simultaneously viewed factors. 
+
+
 <script src="https://d3js.org/d3.v7.min.js"></script>
 
 <div id="plot"></div>
-<button onclick="obesityData()">Obesity Trends</button>
-<button onclick="physicalData()">Physical Activity Trends</button>
+<button onclick="obesityData()">Obesity</button>
+<button onclick="physicalData()">Physical Activity</button>
+<button onclick="sugarData()">Sugar Drinks</button>
+<button onclick="tvData()">TV Watching</button>
 
 <script src="myscript.js"></script>
+</br>
+
+As seen from the results above, the obesity rate has only slightly increased from 2007 to 2019, while the rate of daily sugary drinks consumption and TV-watching has decreased. Daily physical activity rates also increased slightly between 2010-2014 but then decreased again to around 20%. 
+  
