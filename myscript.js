@@ -18,6 +18,26 @@ const physical = [
   { x: 2019, y: 19.1}
 ]
 
+const sugardrinks = [
+  { x: 2007, y: 24},
+  { x: 2009, y: 24.5},
+  { x: 2011, y: 21.4},
+  { x: 2013, y: 20.4},
+  { x: 2015, y: 14.0},
+  { x: 2017, y: 13.7},
+  { x: 2019, y: 12.9}
+]
+
+const tvwatching = [
+  { x: 2007, y: 35.3},
+  { x: 2009, y: 32.7},
+  { x: 2011, y: 30.6},
+  { x: 2013, y: 27.4},
+  { x: 2015, y: 24.2},
+  { x: 2017, y: 20.7},
+  { x: 2019, y: 17.8}
+]
+
 // Set up the SVG container
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 600 - margin.left - margin.right;
@@ -29,49 +49,124 @@ const svg = d3.select("#plot").append("svg")
   .append("g")
   .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
+svg.append("text")
+.attr("x", width/2)
+.attr("y", margin.top/2)
+.attr("text-anchor", "middle")
+.text("Physical Health Trends in New York from 2007-2019");
+
 // Create the line
 const line = d3.line()
   .x(d => xScale(d.x))
   .y(d => yScale(d.y));
 
 // Create scales
-const min_data = 2000, max_data = 2020
+const min_data = 2005, max_data = 2020
 const xScale = d3.scaleLinear().domain([min_data, max_data]).range([0, width]);
 const yScale = d3.scaleLinear().domain([0, 40]).range([height, 0]);
 
 
+var obesitypath;
+var physicalpath;
+var sugarpath;
+var tvpath;
+
 function obesityData() {
 
-  svg.append("path")
+  if(obesitypath) {
+    obesitypath.remove();
+    obesitypath = null;
+  }
+
+  else {
+  obesitypath = svg.append("path")
   .data([obesity])
   .attr("d", line)
   .attr("fill", "none")
   .attr("stroke", "blue");
 
-  // Add axes
   svg.append("g")
   .attr("transform", "translate(0," + height + ")")
   .call(d3.axisBottom(xScale));
 
 svg.append("g")
   .call(d3.axisLeft(yScale));
+  }
 }
 
 
 function physicalData() {
 
-  svg.append("path")
+  if(physicalpath) {
+    physicalpath.remove();
+    physicalpath = null;
+  }
+
+  else {
+  physicalpath = svg.append("path")
   .data([physical])
   .attr("d", line)
   .attr("fill", "none")
   .attr("stroke", "red");
 
-  // Add axes
   svg.append("g")
   .attr("transform", "translate(0," + height + ")")
   .call(d3.axisBottom(xScale));
 
   svg.append("g")
   .call(d3.axisLeft(yScale));
+  }
 
 }
+
+function sugarData() {
+
+  if(sugarpath) {
+    sugarpath.remove();
+    sugarpath = null;
+  }
+
+  else {
+  sugarpath = svg.append("path")
+  .data([sugardrinks])
+  .attr("d", line)
+  .attr("fill", "none")
+  .attr("stroke", "green");
+
+  svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(xScale));
+
+  svg.append("g")
+  .call(d3.axisLeft(yScale));
+  }
+}
+
+function tvData() {
+
+  if(tvpath) {
+    tvpath.remove();
+    tvpath = null;
+  }
+
+  else {
+  tvpath = svg.append("path")
+  .data([tvwatching])
+  .attr("d", line)
+  .attr("fill", "none")
+  .attr("stroke", "purple");
+
+  svg.append("g")
+  .attr("transform", "translate(0," + height + ")")
+  .call(d3.axisBottom(xScale));
+
+  svg.append("g")
+  .call(d3.axisLeft(yScale));
+  }
+
+}
+
+//Sources
+//https://stackoverflow.com/questions/14221359/toggle-button-for-d3-js
+//https://www.educative.io/answers/how-to-create-a-line-chart-using-d3
+//https://d3-graph-gallery.com/graph/line_basic.html
