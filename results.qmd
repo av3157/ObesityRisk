@@ -32,7 +32,7 @@ data_final <- na.omit(data_final)
 
 ## Exploratory Plots
 
-Before diving into relationships between the strata and obesity rates, we first want to understand the relationship between our categorical variables.
+Before diving into relationships between the strata, health rates, and obesity rates, we first want to understand the relationship between our categorical variables.
 
 ```{r, mosaic}
 library(vcd)
@@ -61,12 +61,12 @@ ggplot(class_strata, aes(x=`Data_Value`, y=StratificationCategory1, fill=Class))
   theme(plot.title = element_text(hjust=0.5, color="black", size=16, face="bold"),
         axis.title.x = element_text(size=14),
         axis.title.y = element_text(size=14)) +
-  labs(title="Strata vs Health Rates by Class", x="Health Rate (%)", y="Stratum")
+  labs(title="Strata vs All Health Rates by Class", x="All Health Rate (%)", y="Stratum")
 ```
 This ridgeline plot allows us to understand the distribution of the obesity rates for each class among the strata. As shown, the "Fruits/Veggies" class contributes to the highest obesity percentages among all strata. Furthermore, the "Obesity / Weight Status" class has the highest density and most amount of data collected, affirming what we saw in the mosaic plot before. [ADD D3 DESCRIPTION HERE] 
 
 
-## Question 1: Stratum vs Obesity 
+## Question 1: Stratum vs Obesity Rate
 
 In this section, we will tackle the relationship between each stratum and average obesity rates using data from the "Obesity / Weight Status" class. 
 
@@ -85,7 +85,7 @@ p1 <- ggplot(obesity_class_race, aes(x=fct_reorder(Stratification1,-`AVG Obesity
         axis.title.y = element_text(size=14),
         axis.text = element_text(size=12)) +
   scale_x_discrete(guide = guide_axis(angle = 45)) +
-  labs(title="Average Obesity Percentage by Race",  x="Race", y="Average Obesity Rate (%)")
+  labs(title="Average Obesity Rate by Race",  x="Race", y="Average Obesity Rate (%)")
 ```
 
 
@@ -104,7 +104,7 @@ p2 <- ggplot(obesity_class_gender, aes(x=fct_reorder(Stratification1,-`AVG Obesi
         axis.title.y = element_text(size=14),
         axis.text = element_text(size=12)) +
   scale_x_discrete(guide = guide_axis(angle = 45)) +
-  labs(title="Average Obesity Percentage by Gender",  x="Gender", y="Average Obesity Rate (%)")
+  labs(title="Average Obesity Rate by Gender",  x="Gender", y="Average Obesity Rate (%)")
 ```
 
 
@@ -123,7 +123,7 @@ p3 <- ggplot(obesity_class_grade, aes(x=fct_reorder(Stratification1,-`AVG Obesit
         axis.title.y = element_text(size=14), 
         axis.text = element_text(size=12)) +
   scale_x_discrete(guide = guide_axis(angle = 45)) +
-  labs(title="Average Obesity Percentage by Grade",  x="Grade", y="Average Obesity Rate (%)")
+  labs(title="Average Obesity Rate by Grade",  x="Grade", y="Average Obesity Rate (%)")
 ```
 
 
@@ -157,11 +157,11 @@ ggplot(lifestyle_race, aes(x=Class, y=`AVG Health %`)) +
         axis.title.x = element_text(size=16),
         axis.title.y = element_text(size=16),
         axis.text = element_text(size=12)) +
-  labs(title="Average Health Rating vs Lifestyle Choices by Race", x="Lifestyle Choice", y="Average Health Rate (%)") +
+  labs(title="Average Health Rate vs Lifestyle Choices by Race", x="Lifestyle Choice", y="Average Health Rate (%)") +
   scale_x_discrete(guide = guide_axis(angle = 90))
   
 ```
-This bar plot, faceted by race, shows us the health ratings based on specific lifestyle choices. As shown, the common factor is that all races appear to have high percentages of low fruit and vegetable intake. The next nearly common factor is that most races have high percentages of excessive time spent watching TV. Finally, most races tend to have higher physical activity than sugary drink intake. These lifestyle choices are clear indicators of poor health and potential causes of further complex health conditions.     
+This bar plot, faceted by race, shows us the average health rates based on specific lifestyle choices. As shown, the common factor is that all races appear to have high percentages of low fruit and vegetable intake. The next nearly common factor is that most races have high percentages of excessive time spent watching TV. Finally, most races tend to have higher physical activity than sugary drink intake. These lifestyle choices are clear indicators of poor health and potential causes of further complex health conditions.     
 
 
 ```{r, lifestyle_gender}
@@ -180,11 +180,11 @@ ggplot(lifestyle_gender, aes(x=Class, y=`AVG Health %`)) +
         axis.title.x = element_text(size=14),
         axis.title.y = element_text(size=14),
         axis.text = element_text(size=12)) +
-  labs(title="Average Health Rating vs Lifestyle Choices by Gender", x="Lifestyle Choice", y="Average Health Rate (%)") +
+  labs(title="Average Health Rate vs Lifestyle Choices by Gender", x="Lifestyle Choice", y="Average Health Rate (%)") +
   scale_x_discrete(guide = guide_axis(angle = 45))
   
 ```
-This bar plot, faceted by gender, shows us the health ratings based on specific lifestyle choices. This plot shows similar conclusions as the previous plot; high percentages of low fruit and vegetable intake and high percentages of excessive time spent watching TV. One difference is that females have similar physical activity and sugary intake percentages whereas males follow the previously mentioned trend. 
+This bar plot, faceted by gender, shows us the average health rates based on specific lifestyle choices. This plot shows similar conclusions as the previous plot; high percentages of low fruit and vegetable intake and high percentages of excessive time spent watching TV. One difference is that females have similar physical activity and sugary intake percentages whereas males follow the previously mentioned trend. 
 
 
 ```{r, lifestyle_grade}
@@ -207,22 +207,22 @@ ggplot(lifestyle_grade, aes(x=Class, y=`AVG Health %`)) +
         axis.title.x = element_text(size=14),
         axis.title.y = element_text(size=14),
         axis.text = element_text(size=12)) +
-  labs(title="Average Average Health Rating vs Lifestyle Choices by Grade", x="Lifestyle Choice", y="Average Health Rate (%)") +
+  labs(title="Average Average Health Rate vs Lifestyle Choices by Grade", x="Lifestyle Choice", y="Average Health Rate (%)") +
   scale_x_discrete(guide = guide_axis(angle = 45))
   
 ```
-This bar plot, faceted by grade, shows us the health ratings based on specific lifestyle choices. Similar to the plots above, this one follows most of the trends aforementioned. What this signifies is that there is some correlation between strata. 
+This bar plot, faceted by grade, shows us the average health rates based on specific lifestyle choices. Similar to the plots above, this one follows most of the trends aforementioned. What this signifies is that there is some correlation between strata, but not the various health factors. This trend was observed in the mosaic plot seen above. 
 
 ## Question 3: Changes in Health and Obesity Rates Over Time
 
-
+In this section, we will tackle how health and obesity rates change over time.
 
 ```{r, years, include=FALSE}
 dates <- data_final$YearEnd - data_final$YearStart
 sum(dates)
 ```
 
-```{r, line_plot, fig.height=6, fig.width=6}
+```{r, health_over_time}
 class_year <- data_final |> 
   select(YearEnd, Class, `Data_Value`, StratificationCategory1, Stratification1) |>
   filter(StratificationCategory1 != "Total") |>
@@ -241,6 +241,7 @@ ggplot(years, aes(x=YearEnd, y=`AVG Health %`)) +
   labs(title="Change of Health Rates over time", x="Year", y="Average Health Rate (%)")
 
 ```
+As seen in the line plot, highschooler health rates improved over the years. In other words, highschoolers started making better lifestyle choices. After further research, 2005 was known as the year of international sport and physical education. Perhaps this is a reason that after this year, there is a noticeable decline in poor health choices and better overall health rates (Source: https://en.wikipedia.org/wiki/2005).
 
 
 ```{r, multiple_lines, fig.height=6, fig.width=8, include=FALSE}
@@ -258,7 +259,7 @@ ggplot(strata, aes(x=YearEnd, y=`AVG Health %`, color=StratificationCategory1)) 
 ```
 
 
-```{r, multiple_lines_classes, fig.height=7, fig.width=10}
+```{r, multiple_lines_health, fig.height=7, fig.width=10}
 strat_order <- c("Male", "Female", "9th", "10th", "11th", "12th", "Non-Hispanic Black", "American Indian/Alaska Native", "Hawaiian/Pacific Islander", "Hispanic", "2 or more races", "Non-Hispanic White", "Asian","Total Average")
 substrats <- class_year |> 
   group_by(StratificationCategory1, Stratification1, YearEnd) |> 
@@ -278,6 +279,7 @@ ggplot(substrats, aes(x=YearEnd, y=`AVG Health %`, color=Stratification1)) +
   labs(title="Change of Health Rates over time by Strata", x="Year", y="Average Health Rate (%)", color="Sub-Stratifications") 
 
 ```
+This stacked line plot, faceted by strata, shows how average health rates for each sub-stratification change over time. As expected, these sub-stratifications follow a similar trend of the previous line plot. One important feature of this graph is the dashed line, which represents the total average health rate for each stratum; in other words, it is the mean of the average health rates for each stratum. Lines that are above the dashed line are worse than the average and lines that lie below the dashed line are better than the average. Most notably, females, 12th graders, and Asian highschoolers had the best lifestyle choices. On the other hand, males, 9th graders, and Non-Hispanic Black highschoolers had the worst lifestyle choices.  
 
 
 ```{r, obesity_over_time}
@@ -297,6 +299,7 @@ ggplot(years_obese, aes(x=YearEnd, y=`AVG Obesity %`)) +
         axis.text = element_text(size=12)) +
   labs(title="Change of Obesity Rates over time", x="Year", y="Average Obesity Rate (%)")
 ```
+As seen in this plot, the obesity rates increase over the years, despite the trend of improving health rates. Although these results appear to contradict themselves, there is one possible explanation that could explain the discrepancy. Though health rates and obesity rates may seem correlated, there may be a confounding variable that is contributing to both rates, causing the negative, unexpected correlation. Between 2007, 2009 and 2011, 2013 there are slight decreases in average obesity rates, but everywhere else the average obesity rates are increasing.    
 
 
 ```{r, multiple_lines_obesity, fig.height=7, fig.width=10}
@@ -319,3 +322,10 @@ ggplot(substrats_obese, aes(x=YearEnd, y=`AVG Obesity %`, color=Stratification1)
   labs(title="Change of Obesity Rates over time by Strata", x="Year", y="Average Obesity Rate (%)", color="Sub-Stratifications") 
 
 ```
+This stacked line plot, faceted by strata, shows how average obesity rates for each sub-stratification change over time. Similar to the previous stacked line plot, the dashed line represents the total average obesity rate for each stratum. The "Gender" and "Race/Ethnicity" strata follow similar trends compared to that of the previous stacked line plot. However, the "Grade" class is where the largest difference occurs; all of the grades appear clustered around the average, suggesting that stratifying by grade does not change the average obesity rate by much.   
+
+
+## Question 4: Location vs Obesity Rates
+
+
+
