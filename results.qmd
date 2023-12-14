@@ -134,10 +134,12 @@ combine23 <- arrangeGrob(p2,p3,ncol=2)
 grid.arrange(p1,combine23,ncol=1)
 
 ```
-The bar plots each show the average obesity rates for each race, gender, and grade. As seen in the first plot, Non-Hispanic Black people have the highest average obesity rates compared to Asian people who have the lowest average obesity rates. In addition, Males have a higher average obesity rate by approximately 2.5% 
+The bar plots each show the average obesity rates for each race, gender, and grade. As seen in the first plot, Non-Hispanic Black people have the highest average obesity rates compared to Asian people who have the lowest average obesity rates. In addition, Males have a higher average obesity rate by approximately 2.5%. Finally, there is an negative correlation between high school students and obesity rates; as the students age, the obesity rates decline.  
 
 
 ## Question 2: Lifestyle Choices vs Health Status 
+
+In this section, we will try to understand how the lifestyle choices of highschoolers affect their health. We will specifically be looking at their fruit and vegetable intake, physical activity, sugary drink intake, and amount of time spent watching TV. 
 
 ```{r, lifestyle_race, fig.height=10, fig.width=10}
 lifestyle_race <- data_final |>
@@ -159,6 +161,7 @@ ggplot(lifestyle_race, aes(x=Class, y=`AVG Health %`)) +
   scale_x_discrete(guide = guide_axis(angle = 90))
   
 ```
+This bar plot, faceted by race, shows us the health ratings based on specific lifestyle choices. As shown, the common factor is that all races appear to have high percentages of low fruit and vegetable intake. The next nearly common factor is that most races have high percentages of excessive time spent watching TV. Finally, most races tend to have higher physical activity than sugary drink intake. These lifestyle choices are clear indicators of poor health and potential causes of further complex health conditions.     
 
 
 ```{r, lifestyle_gender}
@@ -181,6 +184,7 @@ ggplot(lifestyle_gender, aes(x=Class, y=`AVG Health %`)) +
   scale_x_discrete(guide = guide_axis(angle = 45))
   
 ```
+This bar plot, faceted by gender, shows us the health ratings based on specific lifestyle choices. This plot shows similar conclusions as the previous plot; high percentages of low fruit and vegetable intake and high percentages of excessive time spent watching TV. One difference is that females have similar physical activity and sugary intake percentages whereas males follow the previously mentioned trend. 
 
 
 ```{r, lifestyle_grade}
@@ -207,9 +211,11 @@ ggplot(lifestyle_grade, aes(x=Class, y=`AVG Health %`)) +
   scale_x_discrete(guide = guide_axis(angle = 45))
   
 ```
+This bar plot, faceted by grade, shows us the health ratings based on specific lifestyle choices. Similar to the plots above, this one follows most of the trends aforementioned. What this signifies is that there is some correlation between strata. 
+
+## Question 3: Changes in Health and Obesity Rates Over Time
 
 
-## Question 3: Impact of Lifestyle Choices in Health Rates Over Time
 
 ```{r, years, include=FALSE}
 dates <- data_final$YearEnd - data_final$YearStart
@@ -220,7 +226,8 @@ sum(dates)
 class_year <- data_final |> 
   select(YearEnd, Class, `Data_Value`, StratificationCategory1, Stratification1) |>
   filter(StratificationCategory1 != "Total") |>
-  mutate(Class = recode(Class, `Fruits and Vegetables` = 'Fruits/Veggies', `Physical Activity` = 'Phys. Activity', `Sugar Drinks` =  'Sugar Drinks', `Television Viewing` = "Watching TV", `Obesity / Weight Status` = "Overweight"))
+  filter(Class != "Obesity / Weight Status") |>
+  mutate(Class = recode(Class, `Fruits and Vegetables` = 'Fruits/Veggies', `Physical Activity` = 'Phys. Activity', `Sugar Drinks` =  'Sugar Drinks', `Television Viewing` = "Watching TV"))
 
 years <- class_year |> 
   group_by(YearEnd) |> 
@@ -272,3 +279,43 @@ ggplot(substrats, aes(x=YearEnd, y=`AVG Health %`, color=Stratification1)) +
 
 ```
 
+
+```{r, obesity_over_time}
+obesity_time <- data_final |> 
+  select(YearEnd, Class, `Data_Value`, StratificationCategory1, Stratification1) |>
+  filter(StratificationCategory1 != "Total") |>
+  filter(Class == "Obesity / Weight Status")
+
+years_obese <- obesity_time |> 
+  group_by(YearEnd) |> 
+  summarise("AVG Obesity %" = mean(`Data_Value`))
+ggplot(years_obese, aes(x=YearEnd, y=`AVG Obesity %`)) +
+  geom_line(stat="identity") +
+  theme(plot.title = element_text(hjust=0.5, color="black", size=20, face="bold"),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14),
+        axis.text = element_text(size=12)) +
+  labs(title="Change of Obesity Rates over time", x="Year", y="Average Obesity Rate (%)")
+```
+
+
+```{r, multiple_lines_obesity, fig.height=7, fig.width=10}
+strat_order <- c("Male", "Female", "9th", "10th", "11th", "12th", "Non-Hispanic Black", "American Indian/Alaska Native", "Hawaiian/Pacific Islander", "Hispanic", "2 or more races", "Non-Hispanic White", "Asian","Total Average")
+substrats_obese <- obesity_time |> 
+  group_by(StratificationCategory1, Stratification1, YearEnd) |> 
+  summarise("AVG Obesity %" = mean(`Data_Value`)) 
+
+total_trend <- aggregate(`AVG Obesity %` ~ YearEnd + StratificationCategory1, data = substrats_obese, FUN = mean)
+
+ggplot(substrats_obese, aes(x=YearEnd, y=`AVG Obesity %`, color=Stratification1)) +
+  geom_line(stat="identity") +
+  facet_grid(~StratificationCategory1) + 
+  scale_color_manual(breaks=strat_order, values=c("violet","magenta","red","orange","yellow","green","cyan","cornflowerblue","blue","darkblue","purple","brown","grey","black")) + 
+  theme(plot.title = element_text(hjust=0.5, color="black", size=20, face="bold"),
+        axis.title.x = element_text(size=14),
+        axis.title.y = element_text(size=14),
+        axis.text = element_text(size=12)) +
+  geom_line(data = total_trend, aes(x=YearEnd, y=`AVG Obesity %`, color="Total Average"), linetype = "dashed") +
+  labs(title="Change of Obesity Rates over time by Strata", x="Year", y="Average Obesity Rate (%)", color="Sub-Stratifications") 
+
+```
