@@ -1,13 +1,9 @@
-# Interactive graph
+# Interactive Graph 
 
-<style>
-  * {
-    font-family: sans-serif;
-  }
-</style> 
+<script src="https://d3js.org/d3.v7.min.js"></script>
 
-<div id="plot">
-</div>
+<div id="plot"></div>
+<button onclick="obesityData()">Obesity Trends</button>
+<button onclick="physicalData()">Physical Activity Trends</button>
 
-<script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
-<script src="scripts/myscript.js"></script>
+<script src="myscript.js"></script>
