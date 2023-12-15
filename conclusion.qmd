@@ -6,4 +6,4 @@ After extensively exploring this health risk factors data set provided by the CD
 
 2. One contradicting discovery was that despite an improvement in average health rates, the average obesity rates continued to worsen. Although this is a very concerning statistic, it provides us with very useful information: there may be a confounding variable contributing to the discrepancy or improving in these 4 health rates may simply not be enough to decrease obesity rates. Whichever of these may be causing the difference, more research must be done regardless. 
 
-3. 
+3. Over the course of two decades, we can see that obesity rates across all regions of the United States have increased steadily. However, the obesity rates of states in the Midwest and South are, on average, higher than any other region in the United States. Research has found that rural areas typically exhibit a more sedentary lifestyle and lower income. These factors may play a role in obesity onset, as inhabitants engage in less physical activity and may not have the financial means to support weight-loss endeavors.  
