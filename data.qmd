@@ -31,7 +31,7 @@ In this question we will tackle the question of how health and obesity rates cha
 
 ### Question 4: Location vs Obesity Rates
 
-In this question we will tackle the question of whether geographic locations of residence impact the onset of obesity. We will use the "Class", "Data_Value", and "LocationAbbr" columns for this analysis. The "Class" column informs us which health risk category the question pertains to; for this question, we will specifically filter for the "Obesity / Weight Status" class. The "Data_Value" column provides us information on the percentage of students that face the specified health risk. The "LocationAbbr" column contains state name abbreviations where the data samples were taken from; we will group by this column so that we can observe which states have the highest obesity percentages. We will create a bar plot using the "ggplot2" library and plot the state name abbreviations on the x-axis and the obesity percentages on the y-axis. This will allow us to see which state(s) has the highest obesity rate.  
+In this question we will tackle the question of whether geographic locations of residence impact the onset of obesity. We will use the "Class", "Data_Value", and "LocationAbbr" columns for this analysis. The "Class" column informs us which health risk category the question pertains to; for this question, we will specifically filter for the "Obesity / Weight Status" class. The "Data_Value" column provides us information on the percentage of students that face the specified health risk. The "LocationAbbr" column contains state name abbreviations where the data samples were taken from; we will group by this column so that we can observe which states have the highest obesity percentages. For displaying the data, we will use a Plotly interactive choropleth map of the United states to compare region-based obesity. This will allow us to see which state(s) has the highest obesity rate and draw necessary conclusions.   
 
 ## Missing Value Analysis
 
@@ -59,7 +59,7 @@ data$missing_values[is.na(data$Data_Value)] = 'NA'
 data_subset_1 <- data[data$Data_Value_Footnote != "", ]
 
 ggplot(data, aes(x=fct_infreq(missing_values))) +
-  geom_bar(fill="gray") +
+  geom_bar(fill="cornflowerblue") +
   labs(title = "Frequency of Stratification Categories", x = "Categories", y = "Frequency") +
   theme(plot.title = element_text(hjust = 0.5, color = "black", size = 14, face = "bold"))
 

@@ -38,7 +38,7 @@ const tvwatching = [
   { x: 2019, y: 17.8}
 ]
 
-// Set up the SVG container
+// make the main SVG container
 const margin = { top: 20, right: 20, bottom: 30, left: 50 };
 const width = 600 - margin.left - margin.right;
 const height = 400 - margin.top - margin.bottom;
@@ -53,18 +53,21 @@ svg.append("text")
 .attr("x", width/2)
 .attr("y", margin.top/2)
 .attr("text-anchor", "middle")
-.text("Physical Health Trends in New York from 2007-2019");
+.text("Health & Obesity Rates from 2007-2019 in New York");
 
-// Create the line
+// reading each x value as a year
+const parseTime = d3.timeParse("%Y");
+
+// create the line
 const line = d3.line()
-  .x(d => xScale(d.x))
+  .x(d => xScale(parseTime(d.x.toString())))
   .y(d => yScale(d.y));
 
-// Create scales
+// create the axes scales
 const min_data = 2005
 const max_data = 2020
 
-const xScale = d3.scaleLinear().domain([min_data, max_data]).range([0, width]);
+const xScale = d3.scaleTime().domain([parseTime(min_data.toString()), parseTime((max_data).toString())]).range([0, width]);
 const yScale = d3.scaleLinear().domain([0, 40]).range([height, 0]);
 
 var obesitypath;
@@ -72,6 +75,7 @@ var physicalpath;
 var sugarpath;
 var tvpath;
 
+// adds/removes the obesity data
 function obesityData() {
 
   if(obesitypath) {
@@ -96,6 +100,7 @@ svg.append("g")
 }
 
 
+// adds/removes the physical activity data
 function physicalData() {
 
   if(physicalpath) {
@@ -120,6 +125,7 @@ function physicalData() {
 
 }
 
+// adds/removes the sugar drinks data
 function sugarData() {
 
   if(sugarpath) {
@@ -143,6 +149,7 @@ function sugarData() {
   }
 }
 
+// adds/removes the tv watching data
 function tvData() {
 
   if(tvpath) {
@@ -171,3 +178,4 @@ function tvData() {
 //https://stackoverflow.com/questions/14221359/toggle-button-for-d3-js
 //https://www.educative.io/answers/how-to-create-a-line-chart-using-d3
 //https://d3-graph-gallery.com/graph/line_basic.html
+//https://tomordonez.com/d3-convert-string-to-date/
